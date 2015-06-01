@@ -134,33 +134,26 @@
             </Property>
           </Properties>
           <BindingProperties>
-            <BindingProperty name="elements" source="coursesList" target="tblCourses" targetPath="elements" updateStrategy="0" immediately="true">
+            <BindingProperty name="elements" source="coursesList2" target="tblCourses" targetPath="elements" updateStrategy="0" immediately="true">
               <Subbinding sourcePath="${id}">
-                <BindingParameter name="NAME" value="Id"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
               </Subbinding>
               <Subbinding sourcePath="${code}">
-                <BindingParameter name="NAME" value="Code"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
               <Subbinding sourcePath="${name}">
-                <BindingParameter name="NAME" value="Name"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
               <Subbinding sourcePath="${description}">
-                <BindingParameter name="NAME" value="Description"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
               <Subbinding sourcePath="${type}">
-                <BindingParameter name="NAME" value="Type"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
               <Subbinding sourcePath="${numberofCredits}">
-                <BindingParameter name="NAME" value="Numberof Credits"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
               </Subbinding>
               <Subbinding sourcePath="${lab}">
-                <BindingParameter name="NAME" value="Lab"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
             </BindingProperty>
@@ -172,6 +165,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnModify">
       <Properties>

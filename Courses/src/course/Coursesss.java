@@ -6,18 +6,32 @@
 
 package course;
 
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author user
+ * @author User
+ *
  */
+import java.sql.*;
+
 public class Coursesss extends javax.swing.JDialog {
 
     /**
      * Creates new form Coursesss
      */
+    
+     private Connection con;
+    private int crsid;
+    
     public Coursesss(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setTitle("Courses");
+        this.setLocationRelativeTo(this);
+        this.con = con;
+        this.crsid = crsid;
+        populate();
     }
 
     /**
@@ -29,17 +43,115 @@ public class Coursesss extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgLab = new javax.swing.ButtonGroup();
+        lblCode = new javax.swing.JLabel();
+        txtCode = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtDescription = new javax.swing.JTextField();
+        lblType = new javax.swing.JLabel();
+        cbxType = new javax.swing.JComboBox();
+        lblNOC = new javax.swing.JLabel();
+        cbxNOC = new javax.swing.JComboBox();
+        lblLab = new javax.swing.JLabel();
+        rbYes = new javax.swing.JRadioButton();
+        rbNo = new javax.swing.JRadioButton();
+        btnSave = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        lblCode.setText("Code: ");
+
+        jLabel1.setText("Name:");
+
+        jLabel2.setText("Description:");
+
+        lblType.setText("Type: ");
+
+        cbxType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Major", "Elective" }));
+
+        lblNOC.setText("Number Of Credits: ");
+
+        cbxNOC.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "3", "2", "1" }));
+
+        lblLab.setText("Lab:");
+
+        bgLab.add(rbYes);
+        rbYes.setText("Yes");
+
+        bgLab.add(rbNo);
+        rbNo.setText("No");
+
+        btnSave.setText("Save");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtName))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSave))
+                    .addComponent(txtDescription)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblType)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(68, 68, 68)
+                                .addComponent(lblNOC)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxNOC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblLab)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbYes)
+                                .addGap(18, 18, 18)
+                                .addComponent(rbNo)))
+                        .addGap(0, 84, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCode)
+                    .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblType)
+                    .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNOC)
+                    .addComponent(cbxNOC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblLab)
+                        .addComponent(rbYes))
+                    .addComponent(rbNo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(btnSave)
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -88,5 +200,20 @@ public class Coursesss extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgLab;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox cbxNOC;
+    private javax.swing.JComboBox cbxType;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblCode;
+    private javax.swing.JLabel lblLab;
+    private javax.swing.JLabel lblNOC;
+    private javax.swing.JLabel lblType;
+    private javax.swing.JRadioButton rbNo;
+    private javax.swing.JRadioButton rbYes;
+    private javax.swing.JTextField txtCode;
+    private javax.swing.JTextField txtDescription;
+    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }

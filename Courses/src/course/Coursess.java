@@ -6,18 +6,31 @@
 
 package course;
 
+import java.sql.*;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author user
  */
 public class Coursess extends javax.swing.JFrame {
 
+    
+    public Connection con;
+    public int crsid;
     /**
      * Creates new form Coursess
      */
     public Coursess() {
         initComponents();
+        this.setTitle("LCU Courses");
+        this.setLocationRelativeTo(this);
+        tblCourses.getColumnModel().getColumn(0).setMinWidth(0);
+        tblCourses.getColumnModel().getColumn(0).setMaxWidth(0);
+        
     }
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,7 +53,7 @@ public class Coursess extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, coursesList, tblCourses);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new java.util.List(), tblCourses);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("Id");
         columnBinding.setColumnClass(Integer.class);
@@ -67,6 +80,11 @@ public class Coursess extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblCourses);
 
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnModify.setText("Modify");
         btnModify.addActionListener(new java.awt.event.ActionListener() {
@@ -119,11 +137,42 @@ public class Coursess extends javax.swing.JFrame {
 
     private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
         // TODO add your handling code here:
+        int selectedRow = tblCourses.getSelectedRow();
+        if (selectedRow > -1) {
+            int crsid = Integer.parseInt(tblCourses.getValueAt(selectedRow, 0).toString());
+            Coursesss newCoursesss = new Coursesss(this, true, con, crsid);
+            newCoursesss.setVisible(true);
+            refreshTable();
+        } else {
+            JOptionPane.showMessageDialog(this, "Select a record to modify",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnModifyActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
+        int selectedRow = tblCourses.getSelectedRow();
+        if (selectedRow > -1) {
+            int crsid = Integer.parseInt(tblCourses.getValueAt(selectedRow, 0).toString());
+            try {
+                Statement stmt = con.createStatement();
+                stmt.execute("Delete From tblcoures Where crs_ID =" + crsid);
+                refreshTable();
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Select a record to delete",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling ccode here:
+        Coursesss newCoursesss = new Coursesss(this, true, con, 0);
+        newCoursesss.setVisible(true);
+        refreshTable();
+    }//GEN-LAST:event_btnAddActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,6 +207,21 @@ public class Coursess extends javax.swing.JFrame {
                 new Coursess().setVisible(true);
             }
         });
+    }
+    
+    private void refreshTable() {
+        tblcoursesPUEntityManager.getTransaction().begin();
+        java.util.Collection data = coursesQuery.getResultList();
+        for (Object entity : data) {
+            tblcoursesPUEntityManager.refresh(entity);
+        }
+        coursesList.clear();
+        coursesList.addAll(data);
+        tblcoursesPUEntityManager.getTransaction().commit();
+        bindingGroup.unbind();
+        bindingGroup.bind();
+        tblCourses.getColumnModel().getColumn(0).setMinWidth(0);
+        tblCourses.getColumnModel().getColumn(0).setMaxWidth(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

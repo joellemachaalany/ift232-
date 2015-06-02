@@ -31,9 +31,33 @@ public class Coursesss extends javax.swing.JDialog {
         this.setLocationRelativeTo(this);
         this.con = con;
         this.crsid = crsid;
-        
+        populate();
     }
 
+    
+    private void populate() {
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs
+                    = stmt.executeQuery("Select * "
+                            + "From tblcourses Where crs_ID =" + crsid);
+            if (rs.next()) {
+                txtCode.setText(rs.getString("crs_Code"));
+                txtName.setText(rs.getString("crs_Name"));
+                txtDescription.setText(rs.getString("crs_Description"));
+                cbxType.setSelectedItem(rs.getString("crs_type"));
+                cbxNOC.setSelectedItem(rs.getString("Number_Of_Credits"));
+                if(rs.getString("Lab").equals("Yes")){
+                    chkLab.setSelected(true);
+                }else{
+                    chkLab.setSelected(false);
+                }
+                
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,14 +78,18 @@ public class Coursesss extends javax.swing.JDialog {
         cbxType = new javax.swing.JComboBox();
         lblNOC = new javax.swing.JLabel();
         cbxNOC = new javax.swing.JComboBox();
-        lblLab = new javax.swing.JLabel();
-        rbYes = new javax.swing.JRadioButton();
-        rbNo = new javax.swing.JRadioButton();
         btnSave = new javax.swing.JButton();
+        chkLab = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblCode.setText("Code: ");
+
+        txtCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodeKeyTyped(evt);
+            }
+        });
 
         jLabel1.setText("Name:");
 
@@ -75,15 +103,14 @@ public class Coursesss extends javax.swing.JDialog {
 
         cbxNOC.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "3", "2", "1" }));
 
-        lblLab.setText("Lab:");
-
-        bgLab.add(rbYes);
-        rbYes.setText("Yes");
-
-        bgLab.add(rbNo);
-        rbNo.setText("No");
-
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        chkLab.setText("Lab");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,6 +133,7 @@ public class Coursesss extends javax.swing.JDialog {
                     .addComponent(txtDescription)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chkLab)
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblType)
@@ -114,13 +142,7 @@ public class Coursesss extends javax.swing.JDialog {
                                 .addGap(68, 68, 68)
                                 .addComponent(lblNOC)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxNOC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblLab)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rbYes)
-                                .addGap(18, 18, 18)
-                                .addComponent(rbNo)))
+                                .addComponent(cbxNOC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 84, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -144,10 +166,7 @@ public class Coursesss extends javax.swing.JDialog {
                     .addComponent(lblNOC)
                     .addComponent(cbxNOC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblLab)
-                    .addComponent(rbYes)
-                    .addComponent(rbNo))
+                .addComponent(chkLab)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(btnSave)
                 .addGap(32, 32, 32))
@@ -155,6 +174,65 @@ public class Coursesss extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtCodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodeKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                || txtCode.getText().length() > 1) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodeKeyTyped
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        if (txtCode.getText().equals("")) {
+            JOptionPane.showMessageDialog(this,
+                    "Enter a Code", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+        } else if (txtName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this,
+                    "Enter a Name", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            String code = txtCode.getText();
+            String name = txtName.getText();
+            String description = txtDescription.getText();
+            String type = cbxType.getSelectedItem().toString();
+            String numberOfCredits= cbxNOC.getSelectedItem().toString();
+            String lab;
+            if (chkLab.isSelected()) {
+                lab = "Yes";
+            } else {
+                lab = "No";
+            }
+            try {
+                PreparedStatement pstmt;
+                if(crsid==0){
+                       pstmt = con.prepareStatement("Insert Into "
+                                + "tblcourses (crs_Code,"
+                                + "crs_Name,  "
+                                + "std_academicYear, std_lebanese, "
+                                + "std_age, std_email, std_address) "
+                                + "Values ( '" + code + "', "
+                                + "'" + name + "', '" + description + "', "
+                                + type + ", '" + numberOfCredits + "', "
+                                + lab + ", '");
+                }else{
+                    pstmt = con.prepareStatement("Update tbl_students "
+                            + "Set crs_Code = '" + code + "', "
+                            + "crs_Name = '" + name + "', "
+                            + "crs_description = '" + description + "', "
+                            + "crs_Type = " + type + ", "
+                            + "Number_Of_Credits = '" + numberOfCredits + "', "
+                            + "Lab = " + lab ); 
+                             }
+                pstmt.execute();
+                this.dispose();
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,14 +281,12 @@ public class Coursesss extends javax.swing.JDialog {
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cbxNOC;
     private javax.swing.JComboBox cbxType;
+    private javax.swing.JCheckBox chkLab;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblCode;
-    private javax.swing.JLabel lblLab;
     private javax.swing.JLabel lblNOC;
     private javax.swing.JLabel lblType;
-    private javax.swing.JRadioButton rbNo;
-    private javax.swing.JRadioButton rbYes;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtName;

@@ -94,10 +94,8 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblLab" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="rbYes" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="lblLab" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="rbYes" min="-2" max="-2" attributes="0"/>
                   <Component id="rbNo" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="12" max="32767" attributes="0"/>

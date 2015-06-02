@@ -27,10 +27,21 @@ public class Coursess extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         tblCourses.getColumnModel().getColumn(0).setMinWidth(0);
         tblCourses.getColumnModel().getColumn(0).setMaxWidth(0);
-        
+        getConnection();
     }
     
-   
+    private void getConnection() {
+        try {
+            String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+            String DB_URL = "jdbc:mysql://localhost:3306/students";
+            
+            
+            Class.forName(JDBC_DRIVER);
+            con = DriverManager.getConnection(DB_URL);
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

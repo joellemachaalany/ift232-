@@ -24,14 +24,14 @@ public class Coursesss extends javax.swing.JDialog {
      private Connection con;
     private int crsid;
     
-    public Coursesss(java.awt.Frame parent, boolean modal) {
+    public Coursesss(java.awt.Frame parent, boolean modal, Connection con ,int crsid) {
         super(parent, modal);
         initComponents();
         this.setTitle("Courses");
         this.setLocationRelativeTo(this);
         this.con = con;
         this.crsid = crsid;
-        populate();
+        
     }
 
     /**
@@ -145,9 +145,8 @@ public class Coursesss extends javax.swing.JDialog {
                     .addComponent(cbxNOC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblLab)
-                        .addComponent(rbYes))
+                    .addComponent(lblLab)
+                    .addComponent(rbYes)
                     .addComponent(rbNo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(btnSave)
@@ -187,7 +186,7 @@ public class Coursesss extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Coursesss dialog = new Coursesss(new javax.swing.JFrame(), true);
+                Coursesss dialog = new Coursesss(new javax.swing.JFrame(), true, null,0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

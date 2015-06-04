@@ -17,7 +17,6 @@ public class Coursess extends javax.swing.JFrame {
 
     
     public Connection con;
-    public int crsid;
     /**
      * Creates new form Coursess
      */
@@ -169,7 +168,7 @@ public class Coursess extends javax.swing.JFrame {
             int crsid = Integer.parseInt(tblCourses.getValueAt(selectedRow, 0).toString());
             try {
                 Statement stmt = con.createStatement();
-                stmt.execute("Delete From tblcoures Where crs_ID =" + crsid);
+                stmt.execute("Delete From tblcourses Where crs_ID =" + crsid);
                 refreshTable();
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());

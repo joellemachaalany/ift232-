@@ -8,11 +8,6 @@ package course;
 
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author User
- *
- */
 import java.sql.*;
 
 public class Coursesss extends javax.swing.JDialog {
@@ -217,17 +212,17 @@ public class Coursesss extends javax.swing.JDialog {
                        pstmt = con.prepareStatement("Insert Into "
                                 + "tblcourses (crs_Code,"
                                 + "crs_Name,  "
-                                + "std_academicYear, std_lebanese, "
-                                + "std_age, std_email, std_address) "
+                                + "crs_Description, crs_Type, "
+                                + "Number_of_Credits, Lab) "
                                 + "Values ( '" + code + "', "
                                 + "'" + name + "', '" + description + "', "
                                 + type + ", '" + numberOfCredits + "', "
                                 + lab + ", '");
                 }else{
-                    pstmt = con.prepareStatement("Update tbl_students "
+                    pstmt = con.prepareStatement("Update tblcourses "
                             + "Set crs_Code = '" + code + "', "
                             + "crs_Name = '" + name + "', "
-                            + "crs_description = '" + description + "', "
+                            + "crs_Description = '" + description + "', "
                             + "crs_Type = " + type + ", "
                             + "Number_Of_Credits = '" + numberOfCredits + "', "
                             + "Lab = " + lab ); 

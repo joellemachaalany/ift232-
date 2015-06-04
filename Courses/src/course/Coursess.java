@@ -33,7 +33,7 @@ public class Coursess extends javax.swing.JFrame {
     private void getConnection() {
         try {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-            String DB_URL = "jdbc:mysql://localhost:3306/students";
+            String DB_URL = "jdbc:mysql://localhost:3306/tblcourses";
             
             
             Class.forName(JDBC_DRIVER);
@@ -56,6 +56,8 @@ public class Coursess extends javax.swing.JFrame {
         tblcoursesPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("tblcoursesPU").createEntityManager();
         coursesQuery = java.beans.Beans.isDesignTime() ? null : tblcoursesPUEntityManager.createQuery("SELECT c FROM Courses c");
         coursesList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : coursesQuery.getResultList();
+        coursesQuery1 = java.beans.Beans.isDesignTime() ? null : tblcoursesPUEntityManager.createQuery("SELECT c FROM Courses c");
+        coursesList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : coursesQuery1.getResultList();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCourses = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
@@ -64,7 +66,7 @@ public class Coursess extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new java.util.List(), tblCourses);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, coursesList1, tblCourses);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("Id");
         columnBinding.setColumnClass(Integer.class);
@@ -240,7 +242,9 @@ public class Coursess extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnModify;
     private java.util.List<course.Courses> coursesList;
+    private java.util.List<course.Courses> coursesList1;
     private javax.persistence.Query coursesQuery;
+    private javax.persistence.Query coursesQuery1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCourses;
     private javax.persistence.EntityManager tblcoursesPUEntityManager;

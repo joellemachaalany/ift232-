@@ -93,6 +93,12 @@ public class Coursesss extends javax.swing.JDialog {
 
         jLabel1.setText("Name:");
 
+        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNameKeyTyped(evt);
+            }
+        });
+
         jLabel2.setText("Description:");
 
         lblType.setText("Type: ");
@@ -177,10 +183,7 @@ public class Coursesss extends javax.swing.JDialog {
 
     private void txtCodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodeKeyTyped
         // TODO add your handling code here:
-        if (!Character.isDigit(evt.getKeyChar())
-                || txtCode.getText().length() > 1) {
-            evt.consume();
-        }
+        
     }//GEN-LAST:event_txtCodeKeyTyped
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -198,7 +201,10 @@ public class Coursesss extends javax.swing.JDialog {
             String name = txtName.getText();
             String description = txtDescription.getText();
             String type = cbxType.getSelectedItem().toString();
-            String numberOfCredits= cbxNOC.getSelectedItem().toString();
+            int numberOfCredits
+                    = Integer.parseInt(
+                            cbxNOC.
+                            getSelectedItem().toString());
             String lab;
             if (chkLab.isSelected()) {
                 lab = "Yes";
@@ -233,6 +239,11 @@ public class Coursesss extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void txtNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyTyped
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtNameKeyTyped
 
     /**
      * @param args the command line arguments

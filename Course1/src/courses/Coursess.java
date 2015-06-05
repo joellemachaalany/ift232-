@@ -42,7 +42,7 @@ public class Coursess extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
     
-    public void populate(){
+    private void populate(){
       try {
             Statement stmt = con.createStatement();
             ResultSet rs
@@ -229,7 +229,8 @@ public class Coursess extends javax.swing.JDialog {
                             + "crs_Description = '" + description + "', "
                             + "crs_Type = " + type + ", "
                             + "crs_Number_of_credits = '" + numberOfCredits + "', "
-                            + "crs_Lab = " + lab ); 
+                            + "crs_Lab = " + lab + "' "
+                            + "Where crs_ID = " + crsid); 
                 }
                 pstmt.execute();
                 this.dispose();

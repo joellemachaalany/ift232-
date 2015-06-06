@@ -47,7 +47,7 @@ public class Coursess extends javax.swing.JDialog {
             Statement stmt = con.createStatement();
             ResultSet rs
                     = stmt.executeQuery("Select * "
-                            + "From tblcourse Where crs_ID =" + crsid);
+                            + "From course Where crs_ID =" + crsid);
             if (rs.next()) {
                 txtCode.setText(rs.getString("crs_Code"));
                 txtName.setText(rs.getString("crs_Name"));

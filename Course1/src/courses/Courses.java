@@ -30,8 +30,10 @@ public class Courses extends javax.swing.JFrame {
         try {
             String JDBC_DRIVER = "com.mysql.jdbc.Driver";
             String DB_URL = "jdbc:mysql://localhost:3306/tblcourse";
+            String USERNAME = "root";
+            String PASSWORD = "";
             Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DB_URL);
+            con = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
         } catch (ClassNotFoundException | SQLException ex) {
             System.err.println(ex.getMessage());
         }
@@ -168,7 +170,7 @@ public class Courses extends javax.swing.JFrame {
             int crsid = Integer.parseInt(tblCourses.getValueAt(selectedRow, 0).toString());
             try {
                 Statement stmt = con.createStatement();
-                stmt.execute("Delete From tblcourse Where crs_ID =" + crsid);
+                stmt.execute("Delete From course Where crs_ID =" + crsid);
                 refreshTable();
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());

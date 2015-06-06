@@ -214,22 +214,22 @@ public class Coursess extends javax.swing.JDialog {
                 PreparedStatement pstmt;
                 if(crsid==0){
                        pstmt = con.prepareStatement("Insert Into "
-                                + "tblcourse (crs_Code,"
+                                + "course (crs_Code,"
                                 + "crs_Name, crs_Description, "
                                 + "crs_Type, crs_Number_of_credits, "
                                 + "crs_Lab) "
                                 + "Values ( '" + code + "', "
-                                + "'" + name + "', '" + description + "', "
-                                + type + ", '" + numberOfCredits + "', "
+                                + "'" + name + "', '" + description + "', '"
+                                + type + "', " + numberOfCredits + ", '"
                                 + lab + "')");
                 }else{
-                    pstmt = con.prepareStatement("Update tblcourse "
+                    pstmt = con.prepareStatement("Update course "
                             + "Set crs_Code = '" + code + "', "
                             + "crs_Name = '" + name + "', "
                             + "crs_Description = '" + description + "', "
-                            + "crs_Type = " + type + ", "
-                            + "crs_Number_of_credits = '" + numberOfCredits + "', "
-                            + "crs_Lab = " + lab + "' "
+                            + "crs_Type = '" + type + "', "
+                            + "crs_Number_of_credits = " + numberOfCredits + ", "
+                            + "crs_Lab = '" + lab + "' "
                             + "Where crs_ID = " + crsid); 
                 }
                 pstmt.execute();
